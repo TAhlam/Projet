@@ -39,7 +39,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all().order_by("-created_at")
     serializer_class = ProductSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    filter_backends = [filters.OrderingFilter]
+    # filter_backends = [filters.OrderingFilter]
     ordering_fields = ["created_at", "price", "name"]
     ordering = ["-created_at"]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
