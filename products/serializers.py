@@ -1,13 +1,22 @@
 from rest_framework import serializers
-from .models import Product
+from .models import Product, Category
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id", "name", "slug"]
 
 class ProductSerializer(serializers.ModelSerializer):
     """
     Représentation d'un produit vendable.
     - name: nom commercial
-    - price: prix TTC en euros (doit être > 0)
+    - price: prix TTC (doit être > 0)
+    - stock: quantité disponible (>= 0)
+    - category: ID d'une Category (optionnelle)
     - created_at: horodatage de création (lecture seule)
     """
+    category_detail = CategorySerializer(source="category", read_only=True)
+
     class Meta:
         model = Product
         fields = "__all__"
